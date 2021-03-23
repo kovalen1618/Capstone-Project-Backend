@@ -9,19 +9,11 @@ using System.Threading.Tasks;
 
 namespace playlist_app_backend.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private IRepositoryWrapper _repoWrapper; 
-
-        /*private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<WeatherForecastController> _logger;*/
+        private IRepositoryWrapper _repoWrapper;
 
         public WeatherForecastController(IRepositoryWrapper repoWrapper)
         {
@@ -34,14 +26,6 @@ namespace playlist_app_backend.Controllers
             var playlists = _repoWrapper.Playlist.FindAll();
 
             return new string[] { "value1", "value2" };
-           /* var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();*/
         }
     }
 }
