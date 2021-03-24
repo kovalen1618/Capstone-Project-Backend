@@ -8,6 +8,7 @@ namespace playlist_app_backend.Contracts
 {
     public interface IPlaylistRepository : IRepositoryBase<Playlist>
     {
-
+        IEnumerable<Playlist> GetAllPlaylists();
+        Playlist GetPlaylistById(int playlistId);
     }
 }

@@ -27,7 +27,7 @@ namespace playlist_app_backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Playlists");
+                    b.ToTable("playlist");
                 });
 
             modelBuilder.Entity("playlist_app_backend.Entities.Models.QuoteItem", b =>
@@ -49,7 +49,7 @@ namespace playlist_app_backend.Migrations
 
                     b.HasIndex("PlaylistId");
 
-                    b.ToTable("QuoteItems");
+                    b.ToTable("QuoteItem");
                 });
 
             modelBuilder.Entity("playlist_app_backend.Entities.Models.QuoteItem", b =>

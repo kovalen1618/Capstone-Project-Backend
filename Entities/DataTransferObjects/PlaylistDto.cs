@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace playlist_app_backend.Entities.Models
+namespace playlist_app_backend.Entities.DataTransferObjects
 {
-    [Table("playlist")]
-    public class Playlist
+    public class PlaylistDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

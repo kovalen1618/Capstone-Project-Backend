@@ -34,6 +34,7 @@ namespace playlist_app_backend
             services.ConfigureRepositoryWrapper();
             services.ConfigureCors();
             services.ConfigureIISIntegration();
+            services.AddAutoMapper(typeof(Startup));
             
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)
                 .AddAzureADBearer(options => Configuration.Bind("AzureAd", options));

@@ -14,5 +14,18 @@ namespace playlist_app_backend.Repository
             : base(repositoryContext)
         {
         }
+
+        public IEnumerable<Playlist> GetAllPlaylists()
+        {
+            return FindAll()
+                .OrderBy(pl => pl.Name)
+                .ToList();
+        }
+
+        public Playlist GetPlaylistById(int playlistId)
+        {
+            return FindByCondition(playlist => playlist.Id.Equals(playlistId))
+                .FirstOrDefault();
+        }
     }
 }

@@ -8,7 +8,7 @@ using playlist_app_backend.Entities;
 namespace playlist_app_backend.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20210318200916_InitialMigration")]
+    [Migration("20210324174338_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,7 +29,7 @@ namespace playlist_app_backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Playlists");
+                    b.ToTable("playlist");
                 });
 
             modelBuilder.Entity("playlist_app_backend.Entities.Models.QuoteItem", b =>
@@ -51,7 +51,7 @@ namespace playlist_app_backend.Migrations
 
                     b.HasIndex("PlaylistId");
 
-                    b.ToTable("QuoteItems");
+                    b.ToTable("QuoteItem");
                 });
 
             modelBuilder.Entity("playlist_app_backend.Entities.Models.QuoteItem", b =>

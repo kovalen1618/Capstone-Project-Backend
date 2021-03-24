@@ -15,7 +15,6 @@ namespace playlist_app_backend.Extensions
         {
             services.Configure<IISOptions>(options =>
             {
-
             });
         }
         public static void ConfigureCors(this IServiceCollection services)

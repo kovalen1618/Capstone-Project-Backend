@@ -8,7 +8,7 @@ namespace playlist_app_backend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Playlists",
+                name: "playlist",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -17,11 +17,11 @@ namespace playlist_app_backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Playlists", x => x.Id);
+                    table.PrimaryKey("PK_playlist", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "QuoteItems",
+                name: "QuoteItem",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -32,28 +32,28 @@ namespace playlist_app_backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuoteItems", x => x.Id);
+                    table.PrimaryKey("PK_QuoteItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuoteItems_Playlists_PlaylistId",
+                        name: "FK_QuoteItem_playlist_PlaylistId",
                         column: x => x.PlaylistId,
-                        principalTable: "Playlists",
+                        principalTable: "playlist",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuoteItems_PlaylistId",
-                table: "QuoteItems",
+                name: "IX_QuoteItem_PlaylistId",
+                table: "QuoteItem",
                 column: "PlaylistId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "QuoteItems");
+                name: "QuoteItem");
 
             migrationBuilder.DropTable(
-                name: "Playlists");
+                name: "playlist");
         }
     }
 }
