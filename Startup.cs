@@ -16,6 +16,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NLog;
+using System.IO;
 
 namespace playlist_app_backend
 {
@@ -23,6 +25,7 @@ namespace playlist_app_backend
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -34,6 +37,7 @@ namespace playlist_app_backend
             services.ConfigureRepositoryWrapper();
             services.ConfigureCors();
             services.ConfigureIISIntegration();
+            services.ConfigureLoggerService();
             services.AddAutoMapper(typeof(Startup));
             
             services.AddAuthentication(AzureADDefaults.BearerAuthenticationScheme)

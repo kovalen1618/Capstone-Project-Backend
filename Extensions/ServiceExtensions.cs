@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using playlist_app_backend.Contracts;
+using playlist_app_backend.LoggerService;
 using playlist_app_backend.Repository;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,10 @@ namespace playlist_app_backend.Extensions
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+        }
+        public static void ConfigureLoggerService(this IServiceCollection services)
+        {
+            services.AddSingleton<ILoggerManager, LoggerManager>();
         }
     }
 }
