@@ -12,7 +12,9 @@ namespace playlist_app_backend
     {
         public MappingProfile()
         {
-            CreateMap<Playlist, PlaylistDto>();
+            CreateMap<Playlist, PlaylistDto>(); // GET
+
+            CreateMap<PlaylistForCreationDto, Playlist>(); // POST
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using playlist_app_backend.Contracts;
 using playlist_app_backend.Entities.DataTransferObjects;
+using playlist_app_backend.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,36 @@ namespace playlist_app_backend.Controllers
             {
                 var playlistResult = _mapper.Map<PlaylistDto>(playlist);
                 return Ok(playlistResult);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreatePlaylist([FromBody]PlaylistForCreationDto playlist)
+        {
+            try
+            {
+                if (playlist == null)
+                {
+                    return BadRequest("Playist object is null");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model object");
+                }
+
+                var playlistEntity = _mapper.Map<Playlist>(playlist);
+
+                _repoWrapper.Playlist.CreatePlaylist(playlistEntity);
+                _repoWrapper.Save();
+
+                var createdPlaylist = _mapper.Map<PlaylistDto>(playlistEntity);
+
+                return CreatedAtRoute("PlaylistById", new { id = createdPlaylist.Id }, createdPlaylist);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error");
             }
         }
 

@@ -10,5 +10,7 @@ namespace playlist_app_backend.Contracts
     {
         IEnumerable<Playlist> GetAllPlaylists();
         Playlist GetPlaylistById(int playlistId);
+
+        void CreatePlaylist(Playlist playlist);
     }
 }
