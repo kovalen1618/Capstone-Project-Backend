@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace playlist_app_backend.Entities.Models
 {
-    [Table("quoteItem")]
-    public class QuoteItem : Item   // Extend the Item class
+    [Table("tag")]
+    public class Tag
     {
-        public string Text { get; set; }
-        public string Font { get; set; }
-
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<PlaylistTag> PlaylistTags { get; set; }
     }
 }

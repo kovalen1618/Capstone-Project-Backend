@@ -23,6 +23,22 @@ namespace playlist_app_backend.Repository
                 return _playlist;
             }
         }
+
+        private ITagRepository _tag;
+        public ITagRepository Tag
+        {
+            get
+            {
+                if (_tag == null)
+                {
+                    _tag = new TagRepository(_repoContext);
+                }
+                return _tag;
+            }
+        }
+
+
+
         public RepositoryWrapper(RepositoryContext repositoryContext)
         {
             _repoContext = repositoryContext;

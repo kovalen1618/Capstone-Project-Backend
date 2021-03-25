@@ -30,6 +30,21 @@ namespace playlist_app_backend.Migrations
                     b.ToTable("playlist");
                 });
 
+            modelBuilder.Entity("playlist_app_backend.Entities.Models.PlaylistTag", b =>
+                {
+                    b.Property<int>("PlaylistId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PlaylistId", "TagId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("PlaylistTag");
+                });
+
             modelBuilder.Entity("playlist_app_backend.Entities.Models.QuoteItem", b =>
                 {
                     b.Property<int>("Id")
@@ -49,7 +64,39 @@ namespace playlist_app_backend.Migrations
 
                     b.HasIndex("PlaylistId");
 
-                    b.ToTable("QuoteItem");
+                    b.ToTable("quoteItem");
+                });
+
+            modelBuilder.Entity("playlist_app_backend.Entities.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("tag");
+                });
+
+            modelBuilder.Entity("playlist_app_backend.Entities.Models.PlaylistTag", b =>
+                {
+                    b.HasOne("playlist_app_backend.Entities.Models.Playlist", "Playlist")
+                        .WithMany("PlaylistTags")
+                        .HasForeignKey("PlaylistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("playlist_app_backend.Entities.Models.Tag", "Tag")
+                        .WithMany("PlaylistTags")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("playlist_app_backend.Entities.Models.QuoteItem", b =>
