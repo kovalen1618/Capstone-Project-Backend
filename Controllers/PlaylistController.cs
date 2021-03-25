@@ -34,7 +34,7 @@ namespace playlist_app_backend.Controllers
             return Ok(playlistsResult);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "PlaylistById")]
         public IActionResult GetPlaylistById(int id)
         {
             var playlist = _repoWrapper.Playlist.GetPlaylistById(id);
