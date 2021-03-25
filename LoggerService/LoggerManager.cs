@@ -20,9 +20,14 @@ namespace playlist_app_backend.LoggerService
              logger.Error(message);
         }
 
-        public void Loginfo(string message)
+        public void LogInfo(string message)
         {
             logger.Info(message);
+        }
+
+        public void Loginfo(string message)
+        {
+            throw new NotImplementedException();
         }
 
         public void LogWarn(string message)
