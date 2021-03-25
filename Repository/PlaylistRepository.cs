@@ -27,6 +27,10 @@ namespace playlist_app_backend.Repository
             return FindByCondition(playlist => playlist.Id.Equals(playlistId))
                 .FirstOrDefault();
         }
+        public void UpdatePlaylist(Playlist playlist)
+        {
+            Update(playlist);
+        }
 
         public void CreatePlaylist(Playlist playlist)
         {

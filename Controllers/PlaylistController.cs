@@ -72,7 +72,7 @@ namespace playlist_app_backend.Controllers
             }
         }
         [HttpPost]
-        public IActionResult CreatePlaylist([FromBody]PlaylistForCreationDto playlist)
+        public IActionResult CreatePlaylist([FromBody] PlaylistForCreationDto playlist)
         {
             try
             {
@@ -103,6 +103,36 @@ namespace playlist_app_backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-
+        [HttpPut("{id}")]
+        public IActionResult UpdatePlaylist(int id, [FromBody] PlaylistForUpdateDto playlist)
+        {
+            try
+            {
+                if (playlist == null)
+                {
+                    _logger.LogError("Playlist object sent from client is null.");
+                    return BadRequest("Playlist object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid playlist object sent from client");
+                    return BadRequest("Invalid model object");
+                }
+                var playlistEntity = _repoWrapper.Playlist.GetPlaylistById(id);
+                if (playlistEntity == null)
+                {
+                    _logger.LogError($"Playlist with id: {id}, hasn't been found in db.");
+                    return NotFound();
+                }
+                _mapper.Map(playlist, playlistEntity);
+                _repoWrapper.Playlist.UpdatePlaylist(playlistEntity);
+                _repoWrapper.Save();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside UpdatePlaylist action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
-}
