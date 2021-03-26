@@ -27,5 +27,10 @@ namespace playlist_app_backend.Repository
             return FindByCondition(tag => tag.Id.Equals(tagId))
                 .FirstOrDefault();
         }
+
+        public void CreateTag(Tag tag)
+        {
+            Create(tag);
+        }
     }
 }

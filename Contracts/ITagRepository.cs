@@ -10,5 +10,7 @@ namespace playlist_app_backend.Contracts
     {
         IEnumerable<Tag> GetAllTags();
         Tag GetTagById(int tagId);
+
+        void CreateTag(Tag tag);
     }
 }
