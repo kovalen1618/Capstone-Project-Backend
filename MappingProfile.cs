@@ -15,6 +15,8 @@ namespace playlist_app_backend
             CreateMap<Playlist, PlaylistDto>(); // GET
 
             CreateMap<PlaylistForCreationDto, Playlist>(); // POST
+
+            CreateMap<PlaylistForUpdateDto, Playlist>(); // PUT
         }
     }
 }
