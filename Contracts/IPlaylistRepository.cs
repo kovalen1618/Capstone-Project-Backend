@@ -13,5 +13,6 @@ namespace playlist_app_backend.Contracts
 
         void CreatePlaylist(Playlist playlist);
         void UpdatePlaylist(Playlist playlist);
+        void DeletePlaylist(Playlist playlist);
     }
 }

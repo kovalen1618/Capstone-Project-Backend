@@ -21,7 +21,6 @@ namespace playlist_app_backend.Repository
                 .OrderBy(pl => pl.Name)
                 .ToList();
         }
-
         public Playlist GetPlaylistById(int playlistId)
         {
             return FindByCondition(playlist => playlist.Id.Equals(playlistId))
@@ -35,6 +34,10 @@ namespace playlist_app_backend.Repository
         public void CreatePlaylist(Playlist playlist)
         {
             Create(playlist);
+        }
+        public void DeletePlaylist(Playlist playlist)
+        {
+            Delete(playlist);
         }
     }
 }

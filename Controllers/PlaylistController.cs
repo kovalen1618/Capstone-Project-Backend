@@ -135,4 +135,27 @@ namespace playlist_app_backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpDelete("{id}")]
+        public IActionResult DeletePlaylist(int id)
+        {
+            try
+            {
+                var playlist = _repoWrapper.Playlist.GetPlaylistById(id);
+                if (playlist == null)
+                {
+                    _logger.LogError($"Playlist with id: {id}, hasn't been found in db.");
+                    return NotFound();
+                }
+                _repoWrapper.Playlist.DeletePlaylist(playlist);
+                _repoWrapper.Save();
+
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside DeletePlaylist action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
     }
+}
