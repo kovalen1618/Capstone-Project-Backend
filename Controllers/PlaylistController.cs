@@ -32,7 +32,7 @@ namespace playlist_app_backend.Controllers
             try
             {
                 var playlists = _repoWrapper.Playlist.GetAllPlaylists();
-                _logger.LogInfo($"Returned all Playlist form database.");
+                _logger.LogInfo($"Returned all Playlist from database.");
 
                 var playlistsResult = _mapper.Map<IEnumerable<PlaylistDto>>(playlists);
 
