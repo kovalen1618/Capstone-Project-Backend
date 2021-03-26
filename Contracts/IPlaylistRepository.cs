@@ -12,5 +12,7 @@ namespace playlist_app_backend.Contracts
         Playlist GetPlaylistById(int playlistId);
 
         void CreatePlaylist(Playlist playlist);
+        void UpdatePlaylist(Playlist playlist);
+        void DeletePlaylist(Playlist playlist);
     }
 }

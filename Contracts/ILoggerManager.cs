@@ -7,9 +7,10 @@ namespace playlist_app_backend.Contracts
 {
     public interface ILoggerManager
     {
-        void Loginfo(string message);
+        void LogInfo(string message);
         void LogWarn(string message);
         void LogDebug(string message);
         void LogError(string message);
+       
     }
 }
