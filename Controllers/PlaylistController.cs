@@ -32,7 +32,7 @@ namespace playlist_app_backend.Controllers
             try
             {
                 var playlists = _repoWrapper.Playlist.GetAllPlaylists();
-                _logger.LogInfo($"Returned all Playlist from database.");
+                _logger.LogInfo($"Returned all playlist from database.");
 
                 var playlistsResult = _mapper.Map<IEnumerable<PlaylistDto>>(playlists);
 
@@ -60,7 +60,7 @@ namespace playlist_app_backend.Controllers
                 }
                 else
                 {
-                    _logger.LogInfo($"Returned owner with id: {id}");
+                    _logger.LogInfo($"Returned playlist with id: {id}");
                     var playlistResult = _mapper.Map<PlaylistDto>(playlist);
                     return Ok(playlistResult);
                 }

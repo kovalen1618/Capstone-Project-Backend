@@ -12,5 +12,7 @@ namespace playlist_app_backend.Contracts
         Tag GetTagById(int tagId);
 
         void CreateTag(Tag tag);
+        void UpdateTag(Tag tag);
+        void DeleteTag(Tag tag);
     }
 }

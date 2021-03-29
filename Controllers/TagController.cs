@@ -16,37 +16,63 @@ namespace playlist_app_backend.Controllers
     {
         private IRepositoryWrapper _repoWrapper;
         private IMapper _mapper;
+        private ILoggerManager _logger;
 
-        public TagController(IRepositoryWrapper repoWrapper, IMapper mapper)
+        public TagController(IRepositoryWrapper repoWrapper, IMapper mapper, ILoggerManager logger)
         {
             _repoWrapper = repoWrapper;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
         public IActionResult GetAllTags()
         {
-            var tags = _repoWrapper.Tag.GetAllTags();
+            try
+            {
+                var tags = _repoWrapper.Tag.GetAllTags();
+                _logger.LogInfo($"Returned all tags from the database.");
 
-            var tagsResult = _mapper.Map<IEnumerable<TagDto>>(tags);
+                var tagsResult = _mapper.Map<IEnumerable<TagDto>>(tags);
 
-            return Ok(tagsResult);
+                return Ok(tagsResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetAllTags action:" +
+                    $" {ex.Message}");
+                return StatusCode(500, "Interal server error");
+            }
+            
         }
 
         [HttpGet("{id}", Name = "TagById")]
         public IActionResult GetTagById(int id)
         {
-            var tag = _repoWrapper.Tag.GetTagById(id);
+            try
+            {
+                var tag = _repoWrapper.Tag.GetTagById(id);
 
-            if (tag == null)
-            {
-                return NotFound();
+                if (tag == null)
+                {
+                    _logger.LogError($"Tag with id: {id}, has not been found in the" +
+                        $" database.");
+                    return NotFound();
+                }
+                else
+                {
+                    _logger.LogInfo($"Returned tag with id: {id}");
+                    var tagResult = _mapper.Map<TagDto>(tag);
+                    return Ok(tagResult);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var tagResult = _mapper.Map<TagDto>(tag);
-                return Ok(tagResult);
+                _logger.LogError($"Something went wrong inside the GetTagById" +
+                    $" actions: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
+            
         }
 
         [HttpPost]
@@ -56,11 +82,13 @@ namespace playlist_app_backend.Controllers
             {
                 if (tag == null)
                 {
+                    _logger.LogError("Tag objuect sent from the client is null.");
                     return BadRequest("Tag object is null");
                 }
                 
                 if (!ModelState.IsValid)
                 {
+                    _logger.LogError("Invalid tag object sent from the client");
                     return BadRequest("Invalid model object");
                 }
 
@@ -75,6 +103,73 @@ namespace playlist_app_backend.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Something went wrong inside the CreateTag action:" +
+                    $" {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateTag(int id, [FromBody] TagForUpdateDto tag)
+        {
+            try
+            {
+                if (tag == null)
+                {
+                    _logger.LogError("Tag object sent from the client is null.");
+                    return BadRequest("Tag object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid tag object sent from the client.");
+                    return BadRequest("Invalid model object");
+                }
+
+                var tagEntity = _repoWrapper.Tag.GetTagById(id);
+
+                if (tagEntity == null)
+                {
+                    _logger.LogError($"Tag with id: {id}, has not been found in" +
+                        $" the database.");
+                    return NotFound();
+                }
+
+                _mapper.Map(tag, tagEntity);
+                _repoWrapper.Tag.UpdateTag(tagEntity);
+                _repoWrapper.Save();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside the UpdateTag actions:" +
+                    $" {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTag(int id)
+        {
+            try
+            {
+                var tag = _repoWrapper.Tag.GetTagById(id);
+
+                if (tag == null)
+                {
+                    _logger.LogError($"Tag with id: {id}, has not been found in" +
+                        $" the database.");
+                    return NotFound();
+                }
+
+                _repoWrapper.Tag.DeleteTag(tag);
+                _repoWrapper.Save();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside the DeleteTag action:" +
+                    $" {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }

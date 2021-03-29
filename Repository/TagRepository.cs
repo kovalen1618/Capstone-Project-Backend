@@ -32,5 +32,15 @@ namespace playlist_app_backend.Repository
         {
             Create(tag);
         }
+
+        public void UpdateTag(Tag tag)
+        {
+            Update(tag);
+        }
+
+        public void DeleteTag(Tag tag)
+        {
+            Delete(tag);
+        }
     }
 }

@@ -21,6 +21,8 @@ namespace playlist_app_backend
             CreateMap<Tag, TagDto>();
 
             CreateMap<TagForCreationDto, Tag>();
+
+            CreateMap<TagForUpdateDto, Tag>();
         }
     }
 }
