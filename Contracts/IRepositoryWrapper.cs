@@ -8,6 +8,7 @@ namespace playlist_app_backend.Contracts
     public interface IRepositoryWrapper
     {
         IPlaylistRepository Playlist { get; }
+        ITagRepository Tag { get; }
 
         void Save();
     }

@@ -17,6 +17,12 @@ namespace playlist_app_backend
             CreateMap<PlaylistForCreationDto, Playlist>(); // POST
 
             CreateMap<PlaylistForUpdateDto, Playlist>(); // PUT
+
+            CreateMap<Tag, TagDto>();
+
+            CreateMap<TagForCreationDto, Tag>();
+
+            CreateMap<TagForUpdateDto, Tag>();
         }
     }
 }
