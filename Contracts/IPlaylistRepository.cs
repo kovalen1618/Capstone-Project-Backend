@@ -10,6 +10,8 @@ namespace playlist_app_backend.Contracts
     {
         IEnumerable<Playlist> GetAllPlaylists();
         Playlist GetPlaylistById(int playlistId);
+        IEnumerable<Tag> GetTagsForPlaylist(int playlistId);
+        bool Exists(int playlistId);
 
         void CreatePlaylist(Playlist playlist);
         void UpdatePlaylist(Playlist playlist);

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace playlist_app_backend.Controllers
 {
-    [Route("api/tag")]
+    [Route("api/tags")]
     [ApiController]
     public class TagController : ControllerBase
     {

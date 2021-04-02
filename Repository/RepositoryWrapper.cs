@@ -11,6 +11,7 @@ namespace playlist_app_backend.Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private RepositoryContext _repoContext;
+
         private IPlaylistRepository _playlist;
         public IPlaylistRepository Playlist
         {
@@ -34,6 +35,19 @@ namespace playlist_app_backend.Repository
                     _tag = new TagRepository(_repoContext);
                 }
                 return _tag;
+            }
+        }
+
+        private IPlaylistTagRepository _playlistTag;
+        public IPlaylistTagRepository PlaylistTag
+        {
+            get
+            {
+                if (_playlistTag == null)
+                {
+                    _playlistTag = new PlaylistTagRepository(_repoContext, Playlist, Tag);
+                }
+                return _playlistTag;
             }
         }
 

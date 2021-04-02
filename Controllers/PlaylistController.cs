@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace playlist_app_backend.Controllers
 {
-    [Route("api/playlist")]
+    [Route("api/playlists")]
     [ApiController]
     public class PlaylistController : ControllerBase
     {
@@ -19,7 +19,8 @@ namespace playlist_app_backend.Controllers
         private IMapper _mapper;
         private readonly ILoggerManager _logger;
 
-        public PlaylistController(IRepositoryWrapper repoWrapper, IMapper mapper, ILoggerManager logger)
+        public PlaylistController(IRepositoryWrapper repoWrapper, IMapper mapper,
+            ILoggerManager logger)
         {
             _repoWrapper = repoWrapper;
             _mapper = mapper;
@@ -151,11 +152,43 @@ namespace playlist_app_backend.Controllers
 
                 return NoContent();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside DeletePlaylist action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
+        }
+
+
+
+        // TODO: Examine codingevents for proper routing of PlaylistTags as well as
+        // create the proper CRUD functionality for PlaylistTags within the repositories
+
+        [HttpGet]
+        [Route("{playlistId}/tags")]
+        public IActionResult GetPlaylistTags(int playlistId)
+        {
+            IEnumerable<TagDto> tags;
+
+            IEnumerable<Tag> tagEntities = _repoWrapper.Playlist.GetTagsForPlaylist(playlistId);
+            tags = _mapper.Map<IEnumerable<TagDto>>(tagEntities);
+
+            return Ok(tags);
+        }
+
+        [HttpPut]
+        [Route("{playlistId}/tags/{tagId}")]
+        public IActionResult AddTagToPlaylist(int playlistId, int tagId)
+        {
+            var tagCanBeAdded = _repoWrapper.PlaylistTag.CanTagBeAdded(playlistId, tagId);
+            if (!tagCanBeAdded)
+            {
+                return BadRequest();
+            }
+
+            _repoWrapper.PlaylistTag.AddTagToPlaylist(playlistId, tagId);
+            _repoWrapper.Save();
+            return NoContent();
         }
     }
 }

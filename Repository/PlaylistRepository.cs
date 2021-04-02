@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using playlist_app_backend.Contracts;
 using playlist_app_backend.Entities;
 using playlist_app_backend.Entities.Models;
@@ -10,9 +11,11 @@ namespace playlist_app_backend.Repository
 {
     public class PlaylistRepository : RepositoryBase<Playlist>, IPlaylistRepository 
     {
-        public PlaylistRepository(RepositoryContext repositoryContext) 
-            : base(repositoryContext)
+        private RepositoryContext _repoContext;
+        public PlaylistRepository(RepositoryContext repoContext) 
+            : base(repoContext)
         {
+            _repoContext = repoContext;
         }
 
         public IEnumerable<Playlist> GetAllPlaylists()
@@ -21,11 +24,29 @@ namespace playlist_app_backend.Repository
                 .OrderBy(pl => pl.Name)
                 .ToList();
         }
+
         public Playlist GetPlaylistById(int playlistId)
         {
             return FindByCondition(playlist => playlist.Id.Equals(playlistId))
                 .FirstOrDefault();
         }
+
+        public IEnumerable<Tag> GetTagsForPlaylist(int playlistId)
+        {
+            var playlist = _repoContext.Playlists.Include(pl => pl.PlaylistTags)
+                .ThenInclude(plTag => plTag.Tag)
+                .SingleOrDefault(pl => pl.Id == playlistId);
+
+            return playlist?.PlaylistTags.Select(plTag => plTag.Tag).ToList();
+        }
+
+        public bool Exists(int id)
+        {
+            var playlistCount = _repoContext.Playlists.Count(pl => pl.Id == id);
+
+            return playlistCount == 1;
+        }
+
         public void UpdatePlaylist(Playlist playlist)
         {
             Update(playlist);
@@ -39,5 +60,6 @@ namespace playlist_app_backend.Repository
         {
             Delete(playlist);
         }
+
     }
 }

@@ -10,9 +10,11 @@ namespace playlist_app_backend.Repository
 {
     public class TagRepository : RepositoryBase<Tag>, ITagRepository
     {
-        public TagRepository(RepositoryContext repositoryContext)
-            : base(repositoryContext)
+        private RepositoryContext _repoContext;
+        public TagRepository(RepositoryContext repoContext)
+            : base(repoContext)
         {
+            _repoContext = repoContext;
         }
 
         public IEnumerable<Tag> GetAllTags()
@@ -26,6 +28,20 @@ namespace playlist_app_backend.Repository
         {
             return FindByCondition(tag => tag.Id.Equals(tagId))
                 .FirstOrDefault();
+        }
+
+        public bool Exists(int entityId)
+        {
+            var tagCount = _repoContext.Tags.Count(pl => pl.Id == entityId);
+
+            return tagCount == 1;
+        }
+
+        public bool Exists(string name)
+        {
+            var tagCount = _repoContext.Tags.Count(pl => pl.Name == name);
+
+            return tagCount == 1;
         }
 
         public void CreateTag(Tag tag)
