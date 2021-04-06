@@ -25,7 +25,7 @@ namespace playlist_app_backend.Repository
             Delete(quoteItem);
         }
 
-        public IEnumerable<QuoteItem> GetallQuoteItems()
+        public IEnumerable<QuoteItem> GetAllQuoteItems()
         {
             return FindAll()
                 .OrderBy(pl => pl.Id)
