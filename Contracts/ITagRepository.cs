@@ -10,6 +10,7 @@ namespace playlist_app_backend.Contracts
     {
         IEnumerable<Tag> GetAllTags();
         Tag GetTagById(int tagId);
+        IEnumerable<Playlist> GetPlaylistsForTag(int tagId);
         bool Exists(int tagId);
         bool Exists(string name);
 

@@ -1,4 +1,5 @@
-﻿using playlist_app_backend.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using playlist_app_backend.Contracts;
 using playlist_app_backend.Entities;
 using playlist_app_backend.Entities.Models;
 using System;
@@ -28,6 +29,15 @@ namespace playlist_app_backend.Repository
         {
             return FindByCondition(tag => tag.Id.Equals(tagId))
                 .FirstOrDefault();
+        }
+
+        public IEnumerable<Playlist> GetPlaylistsForTag(int tagId)
+        {
+            var tag = _repoContext.Tags.Include(t => t.PlaylistTags)
+                .ThenInclude(plTag => plTag.Playlist)
+                .SingleOrDefault(t => t.Id == tagId);
+
+            return tag?.PlaylistTags.Select(plTag => plTag.Playlist).ToList();
         }
 
         public bool Exists(int entityId)

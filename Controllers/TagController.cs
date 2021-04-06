@@ -173,5 +173,17 @@ namespace playlist_app_backend.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpGet]
+        [Route("{tagId}/playlists")]
+        public IActionResult GetPlaylistsForTag(int tagId)
+        {
+            IEnumerable<PlaylistDto> playlists;
+
+            IEnumerable<Playlist> playlistEntities = _repoWrapper.Tag.GetPlaylistsForTag(tagId);
+            playlists = _mapper.Map<IEnumerable<PlaylistDto>>(playlistEntities);
+
+            return Ok(playlists);
+        }
     }
 }
