@@ -9,6 +9,7 @@ namespace playlist_app_backend.Contracts
     {
         IPlaylistRepository Playlist { get; }
         ITagRepository Tag { get; }
+        IPlaylistTagRepository PlaylistTag { get; }
 
         void Save();
     }

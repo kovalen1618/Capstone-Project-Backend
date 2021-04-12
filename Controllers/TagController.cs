@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace playlist_app_backend.Controllers
 {
-    [Route("api/tag")]
+    [Route("api/tags")]
     [ApiController]
     public class TagController : ControllerBase
     {
@@ -172,6 +172,18 @@ namespace playlist_app_backend.Controllers
                     $" {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
+        }
+
+        [HttpGet]
+        [Route("{tagId}/playlists")]
+        public IActionResult GetPlaylistsForTag(int tagId)
+        {
+            IEnumerable<PlaylistDto> playlists;
+
+            IEnumerable<Playlist> playlistEntities = _repoWrapper.Tag.GetPlaylistsForTag(tagId);
+            playlists = _mapper.Map<IEnumerable<PlaylistDto>>(playlistEntities);
+
+            return Ok(playlists);
         }
     }
 }
