@@ -8,7 +8,7 @@ namespace playlist_app_backend.Contracts
 {
     public interface IItemRepository: IRepositoryBase<Item>
     {
-        IEnumerable<Item> GetItemsForPlaylist(int playlistId);
+       
         Item GetItemById(int itemId);
         void CreateItem(Item item);
         void UpdateItem(Item item);

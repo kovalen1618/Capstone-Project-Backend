@@ -23,6 +23,11 @@ namespace playlist_app_backend
             CreateMap<TagForCreationDto, Tag>();
 
             CreateMap<TagForUpdateDto, Tag>();
+
+            CreateMap<QuoteItem, ItemDto>()
+                .ForMember(d => d.Id, m => m.MapFrom(s => s.Id))
+                .ForMember(d => d.PlaylistId, m => m.MapFrom(s => s.PlaylistId));
+
         }
     }
 }

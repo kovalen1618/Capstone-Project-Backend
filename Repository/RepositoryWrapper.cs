@@ -51,8 +51,18 @@ namespace playlist_app_backend.Repository
             }
         }
 
-
-
+        private IQuoteItemRepository _quoteItem;
+        public IQuoteItemRepository QuoteItem
+        {
+            get
+            {
+                if (_quoteItem == null)
+                {
+                    _quoteItem = new QuoteItemRepository(_repoContext);
+                }
+                return _quoteItem;
+            }
+        }
         public RepositoryWrapper(RepositoryContext repositoryContext)
         {
             _repoContext = repositoryContext;
