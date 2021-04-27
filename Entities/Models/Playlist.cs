@@ -12,6 +12,6 @@ namespace playlist_app_backend.Entities.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public List<PlaylistTag> PlaylistTags { get; set; }
-        public List<QuoteItem> QuoteItems { get; set; }
+        public List<Item> Items { get; set; }
     }
 }

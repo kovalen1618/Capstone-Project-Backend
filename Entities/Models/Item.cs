@@ -11,5 +11,7 @@ namespace playlist_app_backend.Entities.Models
         public int Id { get; set; }
         public int PlaylistId { get; set; }
         public Playlist Playlist { get; set; }
+        public int ItemDataId { get; set; } 
+        public string ItemDataType { get; set; }
     }
 }

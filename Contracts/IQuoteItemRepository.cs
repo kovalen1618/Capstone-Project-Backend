@@ -8,7 +8,7 @@ namespace playlist_app_backend.Contracts
 {
     public interface IQuoteItemRepository: IRepositoryBase<QuoteItem>
     {
-        IEnumerable<QuoteItem> GetQuoteItemsForPlaylist(int playlistId);
+       // IEnumerable<QuoteItem> GetQuoteItemsForPlaylist(int playlistId);
         QuoteItem GetQuoteItemById(int itemId);
         void CreateQuoteItem(QuoteItem quoteItem);
         void UpdateQuoteItem(QuoteItem quoteItem);

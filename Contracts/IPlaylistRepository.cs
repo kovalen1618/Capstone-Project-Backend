@@ -11,6 +11,7 @@ namespace playlist_app_backend.Contracts
         IEnumerable<Playlist> GetAllPlaylists();
         Playlist GetPlaylistById(int playlistId);
         IEnumerable<Tag> GetTagsForPlaylist(int playlistId);
+        IEnumerable<Item> GetItemsForPlaylist(int playlistId);
         bool Exists(int playlistId);
 
         void CreatePlaylist(Playlist playlist);

@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 namespace playlist_app_backend.Entities.Models
 {
     [Table("quoteItem")]
-    public class QuoteItem : Item   // Extend the Item class
+    public class QuoteItem   // Extend the Item class
     {
-        
+        public int Id { get; set; }
         public string Text { get; set; }
         public string Font { get; set; }
+        public Item Item  { get; set; }
 
     }
 }

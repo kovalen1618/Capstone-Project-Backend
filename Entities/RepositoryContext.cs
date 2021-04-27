@@ -12,6 +12,7 @@ namespace playlist_app_backend.Entities
         public DbSet<Playlist> Playlists { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<PlaylistTag> PlaylistTags { get; set; }
+        public DbSet<Item> Items { get; set; }
         public DbSet<QuoteItem> QuoteItems { get; set; }
 
         public RepositoryContext(DbContextOptions dbContextOptions) : base (dbContextOptions) 
